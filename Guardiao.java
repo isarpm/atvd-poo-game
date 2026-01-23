@@ -11,8 +11,4 @@ public class Guardiao extends Combatente{
     public int atacar() {
         return 10 + random.nextInt(0,6);
     }
-
-
-
-
 }
