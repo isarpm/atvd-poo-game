@@ -126,7 +126,11 @@ public class Main {
 
                         Combatente a = atacanteSelecionado.getCombatente();
                         Combatente b = alvoSelecionado.getCombatente();
-                        b.receberDano(a.atacar());
+                        
+                        int dano = a.atacar();
+                        mostrarDanoAnimado(alvoSelecionado, dano);
+
+                        b.receberDano(dano);
                         atacanteSelecionado.atualizar();
                         alvoSelecionado.atualizar();
                         
@@ -154,6 +158,42 @@ public class Main {
         f.setVisible(true);
     }
     
+    private void mostrarDanoAnimado(Component alvo, int dano) {
+        JLabel danoLabel = new JLabel("-" + dano);
+        danoLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        danoLabel.setForeground(Color.RED);
+        danoLabel.setSize(danoLabel.getPreferredSize());
+
+        Point pontoInicial = SwingUtilities.convertPoint(alvo.getParent(), alvo.getLocation(), f.getLayeredPane());
+        int x = pontoInicial.x + (alvo.getWidth() / 2) - (danoLabel.getWidth() / 2);
+        int y = pontoInicial.y + (alvo.getHeight() / 2) - (danoLabel.getHeight() / 2);
+        danoLabel.setLocation(x, y);
+
+        f.getLayeredPane().add(danoLabel, JLayeredPane.POPUP_LAYER);
+
+        int duracao = 800;
+        int quadros = 30;
+        int intervalo = duracao / quadros;
+        int pixelsParaSubir = 60;
+
+        javax.swing.Timer timerDano = new javax.swing.Timer(intervalo, null);
+        final int[] passoAtual = {0};
+
+        timerDano.addActionListener(e -> {
+            passoAtual[0]++;
+            
+            danoLabel.setLocation(x, y - (pixelsParaSubir * passoAtual[0] / quadros));
+
+            if (passoAtual[0] >= quadros) {
+                timerDano.stop();
+                f.getLayeredPane().remove(danoLabel);
+                f.getLayeredPane().repaint(danoLabel.getBounds());
+            }
+        });
+
+        timerDano.start();
+    }
+
     private void animarAtaque(CartaCombatente atacante, CartaCombatente alvo, Runnable onAnimationEnd) {
         Container parentOriginal = atacante.getParent();
         int indiceOriginal = -1;
@@ -279,7 +319,11 @@ public class Main {
         animarAtaque(inimigoAtacante, jogadorAlvo, () -> {
             Combatente a = inimigoAtacante.getCombatente();
             Combatente b = jogadorAlvo.getCombatente();
-            b.receberDano(a.atacar());
+            
+            int dano = a.atacar();
+            mostrarDanoAnimado(jogadorAlvo, dano);
+
+            b.receberDano(dano);
             jogadorAlvo.atualizar();
             inimigoAtacante.atualizar();
 
