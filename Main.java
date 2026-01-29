@@ -21,6 +21,7 @@ class CartaCombatente extends JPanel {
         nome.setForeground(Color.WHITE);
 
         vida = new JProgressBar(0, c.getPvMax());
+        vida.setForeground(Color.GREEN.darker());
         vida.setValue(c.getPv());
         vida.setStringPainted(true);
 
@@ -42,6 +43,17 @@ class CartaCombatente extends JPanel {
 
     public void atualizar() {
         vida.setValue(c.getPv());
+        double porcentagem = (double) c.getPv()/c.getPvMax();
+
+
+        if(porcentagem <= 0.6 && porcentagem > 0.3) {
+            vida.setForeground(new Color(200, 170, 0));
+        } else if(porcentagem <= 0.3) {
+            vida.setForeground(new Color(150, 0, 0));
+
+        }
+
+
         if (!c.vivo()) {
             setBackground(Color.DARK_GRAY);
         }
@@ -306,13 +318,18 @@ public class Main {
 
         List<CartaCombatente> inimigosVivos = cartasInimigo.stream().filter(c -> c.getCombatente().vivo()).toList();
         List<CartaCombatente> jogadoresVivos = cartasJogador.stream().filter(c -> c.getCombatente().vivo()).toList();
-        if (inimigosVivos.isEmpty() || jogadoresVivos.isEmpty()) {
-            System.out.println("Fim de jogo");
-            if (onTurnoInimigoEnd != null) {
-                onTurnoInimigoEnd.run();
-            }
+        if (inimigosVivos.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    f, "🏆 Você venceu!\nTodos os inimigos foram derrotados.", "Vitória", JOptionPane.INFORMATION_MESSAGE
+            );
             return;
         }
+        if (jogadoresVivos.isEmpty()) {
+            JOptionPane.showMessageDialog(f, "💀 GAME OVER", "Derrota", JOptionPane.ERROR_MESSAGE);
+            atacar.setEnabled(false);
+            return;
+        }
+
         CartaCombatente inimigoAtacante = inimigosVivos.get(random.nextInt(inimigosVivos.size()));
         CartaCombatente jogadorAlvo = jogadoresVivos.get(random.nextInt(jogadoresVivos.size()));
 
@@ -327,7 +344,12 @@ public class Main {
             jogadorAlvo.atualizar();
             inimigoAtacante.atualizar();
 
-            if (onTurnoInimigoEnd != null) {
+
+            if (cartasJogador.stream().filter(c -> c.getCombatente().vivo()).toList().isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        f, "💀 GAME OVER\nVocê foi derrotado...", "Derrota", JOptionPane.ERROR_MESSAGE
+                );
+            } else if (onTurnoInimigoEnd != null) {
                 onTurnoInimigoEnd.run();
             }
         });
