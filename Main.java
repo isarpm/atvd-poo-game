@@ -318,13 +318,13 @@ public class Main {
 
         List<CartaCombatente> inimigosVivos = cartasInimigo.stream().filter(c -> c.getCombatente().vivo()).toList();
         List<CartaCombatente> jogadoresVivos = cartasJogador.stream().filter(c -> c.getCombatente().vivo()).toList();
-        if (inimigosVivos.isEmpty() || jogadoresVivos.isEmpty()) {
-            System.out.println("Fim de jogo");
-            if (onTurnoInimigoEnd != null) {
-                onTurnoInimigoEnd.run();
-            }
+        if (inimigosVivos.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    f, "🏆 Você venceu!\nTodos os inimigos foram derrotados.", "Vitória", JOptionPane.INFORMATION_MESSAGE
+            );
             return;
         }
+
         CartaCombatente inimigoAtacante = inimigosVivos.get(random.nextInt(inimigosVivos.size()));
         CartaCombatente jogadorAlvo = jogadoresVivos.get(random.nextInt(jogadoresVivos.size()));
 
@@ -339,7 +339,12 @@ public class Main {
             jogadorAlvo.atualizar();
             inimigoAtacante.atualizar();
 
-            if (onTurnoInimigoEnd != null) {
+
+            if (cartasJogador.stream().filter(c -> c.getCombatente().vivo()).toList().isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        f, "💀 GAME OVER\nVocê foi derrotado...", "Derrota", JOptionPane.ERROR_MESSAGE
+                );
+            } else if (onTurnoInimigoEnd != null) {
                 onTurnoInimigoEnd.run();
             }
         });
