@@ -15,11 +15,9 @@ public class Arcanista extends Combatente {
         
         if (this.mana >= 10) {
             this.mana -= 10;
-            System.out.println(getNome() + " lançou um feitiço arcano! " + exibirBarraMana());
             return 20 + rand.nextInt(10);
         } else {
             this.mana = Math.min(manaMaxima, this.mana + 5); 
-            System.out.println(getNome() + " está exausto e medita para recuperar mana... " + exibirBarraMana());
             return 5;
         }
     }
