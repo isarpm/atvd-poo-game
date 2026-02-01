@@ -10,9 +10,7 @@
 Este é um projeto Java de Programação Orientada a Objetos (POO) onde criamos e testamos classes para diferentes personagens: Arcanista, Caçador, Combatente e Guardião. Ele já vem com testes unitários para garantir que tudo funcione como deveria.
 ## Vídeo de apresentação
 
-<video width="320" height="240" controls>
-  <source src="assets/apresentation.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/4ee40bb5-e6f4-4639-b9f5-d85a18d1067a
 
 ## Estrutura do Projeto
 
