@@ -17,9 +17,16 @@ Este é um projeto Java de Programação Orientada a Objetos (POO) onde criamos 
 - assets/: Aqui estão as imagens dos personagens. (As imagens foram geradas utilizando o ChatGPT.)
 - lib/: Nossas bibliotecas externas, como o junit-platform-console-standalone para rodar os testes.
 
-## Como Compilar
+## Como Jogar
 
-Para compilar os arquivos .java, vá até a pasta raiz do projeto e execute este comando:
+Primeiro precisará baixar o repositório e entrar nele, para isto, execute o seguinte comando:
+
+```bash
+git clone https://github.com/Linksyyy/atvd-poo-game
+cd atvd-poo-game
+```
+
+Então vai precisar compilar os arquivos .java com o comando a seguir:
 
 ```bash
 mkdir -p bin
@@ -27,8 +34,6 @@ javac -d bin -cp lib/junit-platform-console-standalone-1.10.2.jar *.java
 ```
 
 Ele vai criar uma pasta bin e colocar todas as classes compiladas (.class) lá dentro. O JAR do JUnit é incluído para que o compilador encontre as dependências dos testes.
-
-## Como Executar
 
 Após a compilação, você pode iniciar a aplicação (classe Main) utilizando o seguinte comando:
 
