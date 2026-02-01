@@ -11,7 +11,7 @@ Este é um projeto Java de Programação Orientada a Objetos (POO) onde criamos 
 ## Vídeo de apresentação
 
 <video width="320" height="240" controls>
-  <source src="assets/apresentation.mp4" type="video/mp4">
+  <source src="./assets/apresentation.mp4" type="video/mp4">
 </video>
 
 ## Estrutura do Projeto
